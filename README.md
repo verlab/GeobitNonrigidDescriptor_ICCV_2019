@@ -1,8 +1,6 @@
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
 
-## <b>GEOBIT: Geodesic Binary Descriptor for Nonrigid RGB-D Images</b>
-
-<br>[[Project Page]](https://www.verlab.dcc.ufmg.br/descriptors/iccv2019/) [[Paper]](http://openaccess.thecvf.com/content_ICCV_2019/html/Nascimento_GEOBIT_A_Geodesic-Based_Binary_Descriptor_Invariant_to_Non-Rigid_Deformations_for_ICCV_2019_paper.html)
+## <b>GEOBIT: Geodesic Binary Descriptor for Nonrigid RGB-D Images</b> <br>[[Project Page]](https://www.verlab.dcc.ufmg.br/descriptors/iccv2019/) [[Paper]](http://openaccess.thecvf.com/content_ICCV_2019/html/Nascimento_GEOBIT_A_Geodesic-Based_Binary_Descriptor_Invariant_to_Non-Rigid_Deformations_for_ICCV_2019_paper.html)
 
 <img src='images/geobit.png' align="center" width=900 />
 
