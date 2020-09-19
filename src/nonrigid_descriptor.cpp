@@ -70,6 +70,7 @@ float keypoint_scale = 7.0; //default OpenCV KeyPoint.size for the FAST detector
 int pyramid_levels = 0;
 
 std::string dataset_type;
+std::string sourcedir;
 
 cv::Mat global_K, global_Kinv;
 
@@ -211,7 +212,7 @@ void loadCloudFromPNGImages(const std::string &inputdir, const std::string &file
 
     fs.open(inputdir + "/intrinsics.xml", cv::FileStorage::READ);
     fs["intrinsics"] >> K; 
-    //std::cout << K << std::endl; exit(0);
+    std::cout << K << std::endl; 
     global_K = K.clone();
     global_K.convertTo(global_K, CV_64F);
     global_Kinv = global_K.inv();
@@ -229,15 +230,15 @@ void loadCloudFromPNGImages(const std::string &inputdir, const std::string &file
     K.at<double>(2,2) = 1.0;
     cv::Mat Kinv = K.inv();
 
-    //cv::Mat out = in_depth / 10.0;
+    //cv::Mat out = in_depth * 50.0;
     //out.convertTo(out, CV_8U);
-    //cv::imwrite("full.png", out);
+    //cv::imwrite("full.png", out); 
     //apply pyramid smoothing here
     //std::cout << K.inv() << std::endl; getchar();
     depth = pyramid_downsample(in_depth, pyramid_levels);
-    //out = depth/10;
+    //out = depth * 50.0;
     //out.convertTo(out, CV_8U);
-    //cv::imwrite("smoothed.png", out);
+    //cv::imwrite("smoothed.png", out); printf("wrote\n"); exit(0);
 
     // populate our PointCloud with points
     cloud->width    = depth.cols;
@@ -447,7 +448,7 @@ void show_keypoint_on_heatflow(cv::Mat img, const std::vector<double> &dist_heat
 {
     c_keypoints++;
 
-    if(c_keypoints%15==0)
+    if(false && c_keypoints%15==0)
     {
     cv::Mat heat_flow;
     func_display(dist_heat_flow, img, heat_flow);
@@ -1394,7 +1395,7 @@ void compute_vector_feature(const CloudType::Ptr cloud, std::string img_path, co
 
     }
     //cv::imshow("keypoints", img);
-    cv::imwrite("keypoints.png", img);
+    //cv::imwrite("keypoints.png", img);
     //cv::waitKey();
 
     keypoints.clear();
@@ -1481,7 +1482,7 @@ void compute_features_rotated(const CloudType::Ptr cloud, std::string img_path, 
      //Rotated versions of the descriptors (position 0 is the unrotated pattern
 
     //const std::string test_pairs_file = "test_pairs_reaching_holes.txt"; // "test_pairs.txt";
-    const std::string test_pairs_file = "gaussian_1024.txt";
+    const std::string test_pairs_file = sourcedir + "/gaussian_1024.txt";
     std::vector< std::vector<float> > test_pairs;
     
     load_test_pairs(test_pairs_file, test_pairs);
@@ -1600,13 +1601,13 @@ void compute_features_rotated(const CloudType::Ptr cloud, std::string img_path, 
     
         
         //cv::imshow("keypoints", img);
-        cv::imwrite("keypoints.png", img);
+        //cv::imwrite("keypoints.png", img);
         //cv::waitKey();
 
         //keypoints.clear();
         //keypoints = valid_keypoints;
-        printf("Number of valid keypoints: %d\n",valid_keypoints.size());
-        printf("Number of valid descriptors: %d\n", descriptors.rows);
+        //printf("Number of valid keypoints: %d\n",valid_keypoints.size());
+        //printf("Number of valid descriptors: %d\n", descriptors.rows);
         
         rotated_descriptors.push_back(descriptors);
     
@@ -2188,6 +2189,8 @@ int main (int argc, char** argv)
         PCL_ERROR ("Need at leat one other cloud for comparision! Please use -clouds \"cloud1.pcd\" ... \"cloudn.pcd\" to continue.\n");
         return (-1);
     }
+
+    pcl::console::parse_argument(argc, argv, "-sourcedir", sourcedir);
 
     pcl::console::parse_argument(argc, argv, "-isocurvesize", max_isocurve_size);
     std::cout << "isocurve size: " << max_isocurve_size << std::endl;

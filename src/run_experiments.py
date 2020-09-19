@@ -16,7 +16,7 @@ import argparse
 import re
 
 nrigid_bin_folder = os.path.dirname(os.path.realpath(__file__))  +'/build/' #Set the path to the compute_descriptor executable.
-source_folder = '/home/guipotje/Sources/2020-ijcv-geobit-extended-code/geobit/' #Set the path to this source code
+source_folder = os.path.dirname(os.path.realpath(__file__))  #Set the path to this source code
 
 pyramid_nlevels = 2
 kp_scales = [1.0] #Desired scales to test
@@ -33,7 +33,7 @@ def get_dir_list(filename):
 
 	return dirs
 
-CWD = '/homeLocal/guipotje/tmp' ; check_dir(CWD)
+CWD = source_folder + '/tmp' ; check_dir(CWD)
 
 def parseArg():
 	parser = argparse.ArgumentParser()
@@ -117,9 +117,9 @@ def main():
 					command+= ' -clouds ' + target_file
 
 				command+= ' -kpscale ' + str(kp_scale)
-				#command+= ' -sourcedir ' + source_folder
+				command+= ' -sourcedir ' + source_folder
 				command+= ' -isocurvesize ' + str(isocurvesize*kp_scale)
-				command+= ' -detector FAST -distthreshold 512 -desc ORB -desc DAISY -desc FREAK'
+				command+= ' -detector FAST -distthreshold 512 -desc ORB -desc DAISY -desc BRISK'
 				command+= ' -datasettype ' + datasettype_flag
 				command+= ' -pyramidlevels ' + str(pyramid_nlevels)
 
