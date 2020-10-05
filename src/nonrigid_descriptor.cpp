@@ -54,6 +54,16 @@ typedef std::vector<std::vector<double> > vec2d;
 #define USE_KEYPOINT_ORIENTATION "ORB" // use "" to disable, "ORB" or "SURF" for ORB or SURF orientation estimation
 #define RECALC_HEATFLOW 1
 
+// Opencv 4 compatibility 
+#ifdef CV4
+
+#define CV_BGR2GRAY cv::COLOR_BGR2GRAY
+#define CV_INTER_LINEAR cv::INTER_LINEAR
+#define CV_AA cv::LINE_AA
+
+#endif
+
+
 long int c_keypoints =0;
 bool use_detector = false;
 
@@ -410,10 +420,17 @@ void extract_nonholesmask_from_pointcloud(const CloudType::Ptr cloud, cv::Mat &m
         }
 }
 
+std::string dirnameOf(const std::string& fname)
+{
+     size_t pos = fname.find_last_of("\\/");
+     return (std::string::npos == pos)
+         ? ""
+         : fname.substr(0, pos);
+}
+
 void load_test_pairs(const std::string &filename, std::vector< std::vector<float> > &test_pairs) 
 {
     std::ifstream fin(filename.c_str());
-
     if (fin.is_open())
     {
         while(!fin.eof())
@@ -1230,9 +1247,9 @@ void compute_vector_feature(const CloudType::Ptr cloud, std::string img_path, co
     cv::Mat img;
     extract_image_from_pointcloud(cloud, img, img_path);
 
-    //const std::string test_pairs_file = "test_pairs_reaching_holes.txt"; // "test_pairs.txt";
-    //const std::string test_pairs_file = "test_pairs_512.txt";
-    const std::string test_pairs_file = "test_pairs_128.txt";
+    //const std::string test_pairs_file = sourcedir + "/aux/test_pairs_reaching_holes.txt"; // "test_pairs.txt";
+    //const std::string test_pairs_file = sourcedir + "/aux/test_pairs_512.txt";
+    const std::string test_pairs_file = sourcedir + "/aux/test_pairs_128.txt";
     std::vector< std::vector<float> > test_pairs;
     
     load_test_pairs(test_pairs_file, test_pairs);
@@ -1481,8 +1498,8 @@ void compute_features_rotated(const CloudType::Ptr cloud, std::string img_path, 
      
      //Rotated versions of the descriptors (position 0 is the unrotated pattern
 
-    //const std::string test_pairs_file = "test_pairs_reaching_holes.txt"; // "test_pairs.txt";
-    const std::string test_pairs_file = sourcedir + "/gaussian_1024.txt";
+    //const std::string test_pairs_file = sourcedir + "aux/test_pairs_reaching_holes.txt"; // "test_pairs.txt";
+    const std::string test_pairs_file = sourcedir + "/aux/gaussian_1024.txt";
     std::vector< std::vector<float> > test_pairs;
     
     load_test_pairs(test_pairs_file, test_pairs);
@@ -2190,7 +2207,9 @@ int main (int argc, char** argv)
         return (-1);
     }
 
-    pcl::console::parse_argument(argc, argv, "-sourcedir", sourcedir);
+    if (pcl::console::parse_argument(argc, argv, "-sourcedir", sourcedir) == -1){
+        sourcedir = dirnameOf(__FILE__);
+    }
 
     pcl::console::parse_argument(argc, argv, "-isocurvesize", max_isocurve_size);
     std::cout << "isocurve size: " << max_isocurve_size << std::endl;
@@ -2249,7 +2268,11 @@ int main (int argc, char** argv)
     std::vector<cv::KeyPoint> ref_keypoints;
     CSVTable ref_groundtruth;
 
-     cv::Ptr<cv::FeatureDetector> feature_detector = cv::xfeatures2d::SIFT::create();
+    #ifdef CV4 // use opencv4
+        cv::Ptr<cv::FeatureDetector> feature_detector = cv::SIFT::create();
+    #else
+        cv::Ptr<cv::FeatureDetector> feature_detector = cv::xfeatures2d::SIFT::create();
+    #endif
 
 
     //extract_image_from_pointcloud(ref_cloud, ref_img, filename_input.str() + "color.png");
