@@ -16,6 +16,12 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 find_package(PCL 1.8 REQUIRED)
 find_package(OpenCV REQUIRED)
 
+if("${OpenCV_VERSION_MAJOR}" STREQUAL "4")
+  message("Using opencv 4")
+  add_definitions(-DCV4)
+endif()
+
+
 include_directories(${PCL_INCLUDE_DIRS})
 include_directories(${PROJECT_SOURCE_DIR}/libgeodesic/include)
 
