@@ -46,9 +46,11 @@ add_definitions(${PCL_DEFINITIONS})
 include_directories(${PROJECT_SOURCE_DIR}/libgeodesic/include)
 
 file(GLOB GEODESIC_SRC_FILES "${PROJECT_SOURCE_DIR}/libgeodesic/src/*.cpp")
-file(GLOB SRC_FILES "${PROJECT_SOURCE_DIR}/*.cpp")
 
-add_executable (nonrigid_descriptor ${SRC_FILES} ${GEODESIC_SRC_FILES})
+
+file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/*.cpp")
+
+add_executable (nonrigid_descriptor ${SOURCES} ${GEODESIC_SRC_FILES})
 target_link_libraries (nonrigid_descriptor 
 ${PCL_LIBRARIES}
 ${OpenCV_LIBS}
