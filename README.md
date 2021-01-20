@@ -19,7 +19,70 @@ year = {2019}
 
 ## Installation
 
+- Install Dependencies
+  
+    **OpenCV**
+  
+    ```bash
+    # Install minimal prerequisites (Ubuntu 18.04 as reference)
+    sudo apt update && sudo apt install -y cmake g++ wget unzip
+    # Download and unpack sources
+    wget -O opencv.zip https://github.com/opencv/opencv/archive/master.zip
+    wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/master.zip
+    unzip opencv.zip
+    unzip opencv_contrib.zip
+    # Create build directory and switch into it
+    mkdir -p build && cd build
+    # Configure
+    cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-master/modules ../opencv-master
+    # Build
+    cmake --build .
+    ```
+    **PCL**
+    
+    ```bash
+    sudo apt install libpcl-dev
+    ```
+    **Suitsparce**
+
+    ```bash
+    sudo apt-get install python-software-properties
+    sudo add-apt-repository ppa:jmaye/ethz
+    sudo apt-get update
+    sudo apt-get install libsuitesparse-dev
+    ```
+- Compiling
+
+```bash
+mkdir build
+cd build
+cmake ..
+```
+- Testing
+
+```bash
+./nonrigid_descriptor -inputdir ../example -refcloud cloud_1 -clouds cloud_1 -datasettype real
+```
+
 ## RGB-D Dataset
+
+<table>
+<tr>
+<td align="center"><img src="images/geobit_gif1.gif" ></td>
+<td align="center"><img src="images/geobit_gif2.gif" ></td>
+<td align="center"><img src="images/geobit_gif3.gif" ></td>
+</tr>
+<tr>
+<td align="center"><img src="images/geobit_gif4.gif" ></td>
+<td align="center"><img src="images/geobit_gif5.gif" ></td>
+<td align="center"><img src="images/geobit_gif6.gif" ></td>
+</tr>
+<tr>
+<td align="center"><img src="images/geobit_gif7.gif" ></td>
+<td align="center"><img src="images/geobit_gif8.gif" ></td>
+<td align="center"><img src="images/geobit_gif9.gif" ></td>
+</tr>
+</table>
 
 ## Getting Started
 
