@@ -23,22 +23,13 @@ void loadCloudFromPNGImages(const std::string &inputdir, const std::string &file
     in_depth = in_depth / 1000.0;
 
     
-    //cloud_mats[filename] = createCloudCvMat(in_depth, K);
 
     K = K / pow(2, pyramid_levels);
     K.convertTo(K,CV_64F);
     K.at<double>(2,2) = 1.0;
     cv::Mat Kinv = K.inv();
 
-    //cv::Mat out = in_depth * 50.0;
-    //out.convertTo(out, CV_8U);
-    //cv::imwrite("full.png", out); 
-    //apply pyramid smoothing here
-    //std::cout << K.inv() << std::endl; getchar();
     depth = pyramid_downsample(in_depth, pyramid_levels);
-    //out = depth * 50.0;
-    //out.convertTo(out, CV_8U);
-    //cv::imwrite("smoothed.png", out); printf("wrote\n"); exit(0);
 
     // populate our PointCloud with points
     cloud->width    = depth.cols;
@@ -119,8 +110,6 @@ cv::Mat nanConv(cv::Mat img)
     cv::filter2D(mat_conv, conv1, -1, kernel, cv::Point(-1,-1), 0,cv::BORDER_DEFAULT);
     cv::filter2D(mat_ones, conv2, -1, kernel, cv::Point(-1,-1), 0,cv::BORDER_DEFAULT);
 
-    //conv1.setTo(0, conv1 <= 0);
-    //conv2.setTo(0, conv2 <= 0);
 
     smoothed = conv1 / conv2;
 
@@ -140,13 +129,6 @@ void extract_nonholesmask_from_pointcloud(const CloudType::Ptr cloud, cv::Mat &m
             if (pcl_isnan(cloud->at(c, r).z) || !pcl::isFinite(cloud->at(c, r)) || cloud->at(c, r).z > 40.0 /*2*/) /* ||
                 (abs(cloud->at(c, r).x) < epsilon && abs(cloud->at(c, r).y) < epsilon && abs(cloud->at(c, r).z) < epsilon) )*/
                 mask.at<char>(r, c) = 0;
-            /*
-            else if ((cloud->at(c, r).z/cloud->at(c, r + slide).z > dthreshold) || 
-                     (cloud->at(c, r).z/cloud->at(c, r - slide).z > dthreshold) ||
-                     (cloud->at(c, r).z/cloud->at(c + slide, r).z > dthreshold) || 
-                     (cloud->at(c, r).z/cloud->at(c - slide, r).z > dthreshold))
-                mask.at<char>(r, c) = 0;
-                */
         }
 }
 
