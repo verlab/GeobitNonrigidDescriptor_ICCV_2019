@@ -102,8 +102,6 @@ Dataset available at [https://www.verlab.dcc.ufmg.br/descriptors/](https://www.v
 
 **Dataset File Format**: All datasets follow the same format: Color images are stored as 8-bit PNG and depth images are stored as 16-bit PNG images in millimetres. The intrinsics.xml file contains the intrinsic parameters of the camera, allowing the reconstruction of the pointcloud. Each image also has a respective .csv file, where each line consists of a keypoint number (ID), its 2D image coordinates and a boolean flag indicating if the keypoint is visible in the current keyframe. The keypoints are selected in the reference image, therefore all keypoints are visible in the reference frame.
 
-## Getting Started
-
 ### Institution ###
 
 Universidade Federal de Minas Gerais (UFMG)\
@@ -113,7 +111,7 @@ Belo Horizonte - Minas Gerais - Brazil
 
 ### Laboratory ###
 
-![VeRLab](https://www.dcc.ufmg.br/dcc/sites/default/files/public/verlab-logo.png)
+![VeRLab](https://www.verlab.dcc.ufmg.br/wp-content/uploads/2019/05/SVG_Verlab_210x86dpi.png)
 
 **VeRLab:** Laboratory of Computer Vison and Robotics
 https://www.verlab.dcc.ufmg.br
