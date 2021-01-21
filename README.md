@@ -1,6 +1,6 @@
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
 
-## <b>GEOBIT: Geodesic Binary Descriptor for Nonrigid RGB-D Images</b> <br>[[Project Page]](https://www.verlab.dcc.ufmg.br/descriptors/iccv2019/) [[Paper]](http://openaccess.thecvf.com/content_ICCV_2019/html/Nascimento_GEOBIT_A_Geodesic-Based_Binary_Descriptor_Invariant_to_Non-Rigid_Deformations_for_ICCV_2019_paper.html) [[Container]](https://github.com/verlab/GeobitNonrigidDescriptor_ICCV_2019#i--ready-to-use-container) [[RGB-D Dataset]](https://github.com/verlab/GeobitNonrigidDescriptor_ICCV_2019#rgb-d-dataset)
+## <b>GEOBIT: Geodesic Binary Descriptor for Nonrigid RGB-D Images</b> <br>[[Project Page]](https://www.verlab.dcc.ufmg.br/descriptors/iccv2019/) [[Paper]](http://openaccess.thecvf.com/content_ICCV_2019/html/Nascimento_GEOBIT_A_Geodesic-Based_Binary_Descriptor_Invariant_to_Non-Rigid_Deformations_for_ICCV_2019_paper.html) [[Container]](https://github.com/verlab/GeobitNonrigidDescriptor_ICCV_2019#i---ready-to-use-container) [[RGB-D Dataset]](https://github.com/verlab/GeobitNonrigidDescriptor_ICCV_2019#rgb-d-dataset)
 
 <img src='images/geobit.png' align="center" width=900 />
 
@@ -121,8 +121,8 @@ The dataset is available at [https://www.verlab.dcc.ufmg.br/descriptors/](https:
 This is research code, expect that it can change and any fitness for a particular purpose is disclaimed.
 This software is under GNU General Public License Version 3 ([GPLv3](LICENSE)).
 
-**VeRLab:** Laboratory of Computer Vison and Robotics
-https://www.verlab.dcc.ufmg.br
+**VeRLab:** Laboratory of Computer Vison and Robotics https://www.verlab.dcc.ufmg.br
+<br>
 <img align="left" width="auto" height="75" src="./images/ufmg.png">
 <img align="right" width="auto" height="75" src="./images/verlab.png">
 <br/>
