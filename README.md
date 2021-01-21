@@ -1,10 +1,10 @@
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
 
-## <b>GEOBIT: Geodesic Binary Descriptor for Nonrigid RGB-D Images</b> <br>[[Project Page]](https://www.verlab.dcc.ufmg.br/descriptors/iccv2019/) [[Paper]](http://openaccess.thecvf.com/content_ICCV_2019/html/Nascimento_GEOBIT_A_Geodesic-Based_Binary_Descriptor_Invariant_to_Non-Rigid_Deformations_for_ICCV_2019_paper.html) [[RGB-D Dataset]](https://github.com/verlab/GeobitNonrigidDescriptor_ICCV_2019#rgb-d-dataset)
+## <b>GEOBIT: Geodesic Binary Descriptor for Nonrigid RGB-D Images</b> <br>[[Project Page]](https://www.verlab.dcc.ufmg.br/descriptors/iccv2019/) [[Paper]](http://openaccess.thecvf.com/content_ICCV_2019/html/Nascimento_GEOBIT_A_Geodesic-Based_Binary_Descriptor_Invariant_to_Non-Rigid_Deformations_for_ICCV_2019_paper.html) [[Container]](https://github.com/verlab/GeobitNonrigidDescriptor_ICCV_2019#ready-to-use-container) [[RGB-D Dataset]](https://github.com/verlab/GeobitNonrigidDescriptor_ICCV_2019#rgb-d-dataset)
 
 <img src='images/geobit.png' align="center" width=900 />
 
-This repository contains the original implementation of the descriptor presented at "GEOBIT: A Geodesic-Based Binary Descriptor Invariant to Non-Rigid Deformations for RGB-D Images", ICCV 2019. **GeoBit** is a handcrafted binary descriptor that combines appearance and geometric information from RGB-D images to handle isometric non-rigid deformations. It leverages geodesic isocurve information, from heat flow in the surface manifold, to select the feature binary tests.
+This repository contains the original implementation of the descriptor presented at "GEOBIT: A Geodesic-Based Binary Descriptor Invariant to Non-Rigid Deformations for RGB-D Images", ICCV 2019. **GeoBit** is a handcrafted binary descriptor that combines appearance and geometric information from RGB-D images to handle isometric non-rigid deformations. It leverages geodesic isocurve information, from heat flow in the surface manifold, to select the feature binary tests. 
 
 If you find this code useful for your research, please cite the paper:
 
@@ -32,7 +32,7 @@ sudo singularity exec geobit-iccv19 /code/GeobitNonrigidDescriptor_ICCV_2019/bui
 
 ## Local Installation Alternative
 
-Please follow the following steps to install all required libriaries and to compile the descriptor code:
+The install steps were tested on Ubuntu 16.04. Please follow the following steps to install all required libriaries and to compile the descriptor code:
 
 - Install Dependencies
   
