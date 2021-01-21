@@ -1,6 +1,6 @@
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
 
-## <b>GEOBIT: Geodesic Binary Descriptor for Nonrigid RGB-D Images</b> <br>[[Project Page]](https://www.verlab.dcc.ufmg.br/descriptors/iccv2019/) [[Paper]](http://openaccess.thecvf.com/content_ICCV_2019/html/Nascimento_GEOBIT_A_Geodesic-Based_Binary_Descriptor_Invariant_to_Non-Rigid_Deformations_for_ICCV_2019_paper.html) [[Container]](https://github.com/verlab/GeobitNonrigidDescriptor_ICCV_2019#ready-to-use-container) [[RGB-D Dataset]](https://github.com/verlab/GeobitNonrigidDescriptor_ICCV_2019#rgb-d-dataset)
+## <b>GEOBIT: Geodesic Binary Descriptor for Nonrigid RGB-D Images</b> <br>[[Project Page]](https://www.verlab.dcc.ufmg.br/descriptors/iccv2019/) [[Paper]](http://openaccess.thecvf.com/content_ICCV_2019/html/Nascimento_GEOBIT_A_Geodesic-Based_Binary_Descriptor_Invariant_to_Non-Rigid_Deformations_for_ICCV_2019_paper.html) [[Container]](https://github.com/verlab/GeobitNonrigidDescriptor_ICCV_2019#i--ready-to-use-container) [[RGB-D Dataset]](https://github.com/verlab/GeobitNonrigidDescriptor_ICCV_2019#rgb-d-dataset)
 
 <img src='images/geobit.png' align="center" width=900 />
 
@@ -17,7 +17,7 @@ year = {2019}
 }
 ```
 
-## Ready to Use Container
+## I - Ready to Use Container
 
 We provide a ready to use container image available at [radac98/geobit-iccv19](https://hub.docker.com/r/radac98/geobit-iccv19). The container is already configured and contains all precompiled binaries and the provided image sample. The following instructions are for using the container in **Singularity** (if you do not have yet **Singularity** installed, please check [INSTALL_SINGULARITY.md](INSTALL_SINGULARITY.md) for detailed instructions). 
 
@@ -30,7 +30,7 @@ Then for computing the descriptors from the RGB-D image **"example/cloud_1-rgb.p
 sudo singularity exec geobit-iccv19 /code/GeobitNonrigidDescriptor_ICCV_2019/build/nonrigid_descriptor -inputdir /code/GeobitNonrigidDescriptor_ICCV_2019/example -refcloud cloud_1 -clouds cloud_1 -datasettype real
 ```
 
-## Local Installation Alternative
+## II - Local Installation Alternative
 
 The install steps were tested on Ubuntu 16.04. Please follow the following steps to install all required libriaries and to compile the descriptor code:
 
@@ -123,6 +123,6 @@ This software is under GNU General Public License Version 3 ([GPLv3](LICENSE)).
 
 **VeRLab:** Laboratory of Computer Vison and Robotics
 https://www.verlab.dcc.ufmg.br
-<img align="left" width="auto" height="75" src="./docs/assets/ufmg.png">
-<img align="right" width="auto" height="75" src="./docs/assets/verlab.png">
+<img align="left" width="auto" height="75" src="./images/ufmg.png">
+<img align="right" width="auto" height="75" src="./images/verlab.png">
 <br/>
