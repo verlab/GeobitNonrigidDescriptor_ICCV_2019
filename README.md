@@ -21,6 +21,12 @@ year = {2019}
 
 - Install Dependencies
   
+    **CMake**
+
+    ```bash
+    sudo apt install cmake
+    ```
+
     **OpenCV**
   
     ```bash
@@ -37,6 +43,7 @@ year = {2019}
     cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-master/modules ../opencv-master
     # Build
     cmake --build .
+    cmake --install .
     ```
     **PCL**
     
@@ -46,9 +53,6 @@ year = {2019}
     **Suitsparce**
 
     ```bash
-    sudo apt-get install python-software-properties
-    sudo add-apt-repository ppa:jmaye/ethz
-    sudo apt-get update
     sudo apt-get install libsuitesparse-dev
     ```
 - Compiling
@@ -68,21 +72,35 @@ cmake ..
 
 <table>
 <tr>
-<td align="center"><img src="images/geobit_gif1.gif" ></td>
-<td align="center"><img src="images/geobit_gif2.gif" ></td>
-<td align="center"><img src="images/geobit_gif3.gif" ></td>
+<td align="center"><img src="images/geobit_gif1.gif"  width="100" height="100" ></td>
+<td align="center"><img src="images/geobit_gif2.gif"  width="100" height="100" ></td>
+<td align="center"><img src="images/geobit_gif3.gif"  width="100" height="100" ></td>
 </tr>
 <tr>
-<td align="center"><img src="images/geobit_gif4.gif" ></td>
-<td align="center"><img src="images/geobit_gif5.gif" ></td>
-<td align="center"><img src="images/geobit_gif6.gif" ></td>
+<td align="center"><img src="images/geobit_gif4.gif"  width="100" height="100" ></td>
+<td align="center"><img src="images/geobit_gif5.gif"  width="100" height="100" ></td>
+<td align="center"><img src="images/geobit_gif6.gif"  width="100" height="100" ></td>
 </tr>
 <tr>
-<td align="center"><img src="images/geobit_gif7.gif" ></td>
-<td align="center"><img src="images/geobit_gif8.gif" ></td>
-<td align="center"><img src="images/geobit_gif9.gif" ></td>
+<td align="center"><img src="images/geobit_gif7.gif"  width="100" height="100" ></td>
+<td align="center"><img src="images/geobit_gif8.gif"  width="100" height="100" ></td>
+<td align="center"><img src="images/geobit_gif9.gif"  width="100" height="100" ></td>
 </tr>
 </table>
+
+Dataset available at [https://www.verlab.dcc.ufmg.br/descriptors/](https://www.verlab.dcc.ufmg.br/descriptors/)
+
+**Dataset of Deformable RGB-D Images (Presented at ICCV’19):**
+
+[Kinect 1 Sequences (38 MB)](https://www.verlab.dcc.ufmg.br/hyperlapse/downloads/nonrigid/Kinect1.tar.gz) : This dataset contains six different real-world objects under different deformation levels and illumination changes. The RGB-D images were acquired at 640 x 480 resolution with a Kinect 1 sensor. Each image has approximately 50 manually annotated keypoints.
+
+[Simulation (26 MB)](https://www.verlab.dcc.ufmg.br/hyperlapse/downloads/nonrigid/SimulationICCV.tar.gz) : This dataset is composed of simulated RGB-D sequences (640 x 480 pixels) with a physics cloth engine simulation. Several textured clothes are subjected to challenging non-rigid deformation, illumination, rotation and scale changes. The keypoints in this sequence are selected with Harris score in the first reference texture image, and their exact correspondence overtime are tracked in the simulation.
+
+**Extended Dataset (Journal Submission under Peer Review):**
+
+[Kinect 2 Sequences (1.1 GB)](https://www.verlab.dcc.ufmg.br/hyperlapse/downloads/nonrigid/Kinect2.tar.gz) : This dataset contains five additional real-world objects acquired with a Kinect 2 sensor at 1920 x 1080 resolution images. We provide image sequences for each of the five objects containing different levels of deformations: light, medium and heavy deformations. Accurate 80 pointwise correspondences are automatically obtained with a motion capture system.
+
+**Dataset File Format**: All datasets follow the same format: Color images are stored as 8-bit PNG and depth images are stored as 16-bit PNG images in millimetres. The intrinsics.xml file contains the intrinsic parameters of the camera, allowing the reconstruction of the pointcloud. Each image also has a respective .csv file, where each line consists of a keypoint number (ID), its 2D image coordinates and a boolean flag indicating if the keypoint is visible in the current keyframe. The keypoints are selected in the reference image, therefore all keypoints are visible in the reference frame.
 
 ## Getting Started
 
