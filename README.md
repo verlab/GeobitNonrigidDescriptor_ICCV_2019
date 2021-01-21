@@ -17,6 +17,7 @@ year = {2019}
 }
 ```
 
+
 ## Installation
 
 - Install Dependencies
@@ -67,6 +68,10 @@ cmake ..
 ```bash
 ./nonrigid_descriptor -inputdir ../example -refcloud cloud_1 -clouds cloud_1 -datasettype real
 ```
+
+## Docker alternative
+
+- Image: [radac98/geobit-iccv19](https://hub.docker.com/r/radac98/geobit-iccv19)
 
 ## RGB-D Dataset
 
