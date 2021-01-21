@@ -1,3 +1,5 @@
 *.heatflow
 build/
 .vscode
+example/cloud_1__cloud_1__OURS.png
+example/cloud_1__cloud_1__OURS.txt
