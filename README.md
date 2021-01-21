@@ -1,10 +1,10 @@
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
 
-## <b>GEOBIT: Geodesic Binary Descriptor for Nonrigid RGB-D Images</b> <br>[[Project Page]](https://www.verlab.dcc.ufmg.br/descriptors/iccv2019/) [[Paper]](http://openaccess.thecvf.com/content_ICCV_2019/html/Nascimento_GEOBIT_A_Geodesic-Based_Binary_Descriptor_Invariant_to_Non-Rigid_Deformations_for_ICCV_2019_paper.html)
+## <b>GEOBIT: Geodesic Binary Descriptor for Nonrigid RGB-D Images</b> <br>[[Project Page]](https://www.verlab.dcc.ufmg.br/descriptors/iccv2019/) [[Paper]](http://openaccess.thecvf.com/content_ICCV_2019/html/Nascimento_GEOBIT_A_Geodesic-Based_Binary_Descriptor_Invariant_to_Non-Rigid_Deformations_for_ICCV_2019_paper.html) [[RGB-D Dataset]](https://github.com/verlab/GeobitNonrigidDescriptor_ICCV_2019#rgb-d-dataset)
 
 <img src='images/geobit.png' align="center" width=900 />
 
-Code repository for the paper  "GEOBIT: A Geodesic-Based Binary Descriptor Invariant to Non-Rigid Deformations for RGB-D Images", presented in ICCV 2019. GeoBit is a handcrafted binary descriptor that combines appearance and geometric information from RGB-D images to handle isometric non-rigid deformations. It leverages geodesic isocurve information, from heat flow in the surface manifold, to select the feature binary tests.
+This repository contains the original implementation of the descriptor presented at "GEOBIT: A Geodesic-Based Binary Descriptor Invariant to Non-Rigid Deformations for RGB-D Images", ICCV 2019. **GeoBit** is a handcrafted binary descriptor that combines appearance and geometric information from RGB-D images to handle isometric non-rigid deformations. It leverages geodesic isocurve information, from heat flow in the surface manifold, to select the feature binary tests.
 
 If you find this code useful for your research, please cite the paper:
 
@@ -17,8 +17,22 @@ year = {2019}
 }
 ```
 
+## Ready to Use Container
 
-## Installation
+We provide a ready to use container image available at [radac98/geobit-iccv19](https://hub.docker.com/r/radac98/geobit-iccv19). The container is already configured and contains all precompiled binaries and the provided image sample. The following instructions are for using the container in **Singularity** (if you do not have yet **Singularity** installed, please check [INSTALL_SINGULARITY.md](INSTALL_SINGULARITY.md) for detailed instructions). 
+
+Get the container image:
+```bash
+sudo singularity build --sandbox geobit-iccv19 docker://radac98/geobit-iccv19
+```
+Then for computing the descriptors from the RGB-D image **"example/cloud_1-rgb.png"** in the keypoints defined  defined at **"cloud_1.csv"**:
+```bash
+sudo singularity exec geobit-iccv19 /code/GeobitNonrigidDescriptor_ICCV_2019/build/nonrigid_descriptor -inputdir /code/GeobitNonrigidDescriptor_ICCV_2019/example -refcloud cloud_1 -clouds cloud_1 -datasettype real
+```
+
+## Local Installation Alternative
+
+Please follow the following steps to install all required libriaries and to compile the descriptor code:
 
 - Install Dependencies
   
@@ -69,10 +83,6 @@ cmake ..
 ./nonrigid_descriptor -inputdir ../example -refcloud cloud_1 -clouds cloud_1 -datasettype real
 ```
 
-## Docker alternative
-
-- Image: [radac98/geobit-iccv19](https://hub.docker.com/r/radac98/geobit-iccv19)
-
 ## RGB-D Dataset
 
 <table>
@@ -93,7 +103,7 @@ cmake ..
 </tr>
 </table>
 
-Dataset available at [https://www.verlab.dcc.ufmg.br/descriptors/](https://www.verlab.dcc.ufmg.br/descriptors/)
+The dataset is available at [https://www.verlab.dcc.ufmg.br/descriptors/](https://www.verlab.dcc.ufmg.br/descriptors/)
 
 **Dataset of Deformable RGB-D Images (Presented at ICCV’19):**
 
@@ -107,16 +117,12 @@ Dataset available at [https://www.verlab.dcc.ufmg.br/descriptors/](https://www.v
 
 **Dataset File Format**: All datasets follow the same format: Color images are stored as 8-bit PNG and depth images are stored as 16-bit PNG images in millimetres. The intrinsics.xml file contains the intrinsic parameters of the camera, allowing the reconstruction of the pointcloud. Each image also has a respective .csv file, where each line consists of a keypoint number (ID), its 2D image coordinates and a boolean flag indicating if the keypoint is visible in the current keyframe. The keypoints are selected in the reference image, therefore all keypoints are visible in the reference frame.
 
-### Institution ###
-
-Universidade Federal de Minas Gerais (UFMG)\
-Department of Computer Science\
-Belo Horizonte - Minas Gerais - Brazil 
-
-
-### Laboratory ###
-
-![VeRLab](https://www.verlab.dcc.ufmg.br/wp-content/uploads/2019/05/SVG_Verlab_210x86dpi.png)
+### License \& Disclaimer
+This is research code, expect that it can change and any fitness for a particular purpose is disclaimed.
+This software is under GNU General Public License Version 3 ([GPLv3](LICENSE)).
 
 **VeRLab:** Laboratory of Computer Vison and Robotics
 https://www.verlab.dcc.ufmg.br
+<img align="left" width="auto" height="75" src="./docs/assets/ufmg.png">
+<img align="right" width="auto" height="75" src="./docs/assets/verlab.png">
+<br/>
