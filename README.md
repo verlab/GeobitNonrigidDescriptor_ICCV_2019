@@ -9,12 +9,15 @@ This repository contains the original implementation of the descriptor presented
 If you find this code useful for your research, please cite the paper:
 
 ```
-@inproceedings{erickson2019iccv,
-author = {Erickson R. Nascimento and Guilherme Potje and Renato Martins and Felipe Chamone and Mario F. M. Campos and Ruzena Bajcsy},
-title = {{GEOBIT}: A Geodesic-Based Binary Descriptor Invariant to Non-Rigid Deformations for {RGB-D} Images},
-booktitle={IEEE International Conference on Computer Vision (ICCV)},
-year = {2019}
-}
+@INPROCEEDINGS{nascimento2019iccv,
+  author={E. R. {Nascimento} and G. {Potje} and R. {Martins} and F. {Chamone} and M. {Campos} and R. {Bajcsy}},
+  booktitle={2019 IEEE/CVF International Conference on Computer Vision (ICCV)}, 
+  title={GEOBIT: A Geodesic-Based Binary Descriptor Invariant to Non-Rigid Deformations for RGB-D Images}, 
+  year={2019},
+  volume={},
+  number={},
+  pages={10003-10011},
+  doi={10.1109/ICCV.2019.01010}}
 ```
 
 ## I - Ready to Use Container
