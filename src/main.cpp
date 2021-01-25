@@ -23,7 +23,7 @@
 #include "geobit.hpp"
 
 //#define DEBUG_ORIENTATION
-// #define USE_ROTATED_PATTERNS
+#define USE_ROTATED_PATTERNS
 #define SHOW_TEST_PAIRS 0
 #define USE_KEYPOINT_ORIENTATION "ORB" // use "" to disable, "ORB" or "SURF" for ORB or SURF orientation estimation
 #define RECALC_HEATFLOW 1

@@ -811,7 +811,7 @@ void compute_vector_feature(const CloudType::Ptr cloud, std::string img_path, co
 
     //const std::string test_pairs_file = sourcedir + "/aux/test_pairs_reaching_holes.txt"; // "test_pairs.txt";
     //const std::string test_pairs_file = sourcedir + "/aux/test_pairs_512.txt";
-    const std::string test_pairs_file = sourcedir + "/aux/test_pairs_128.txt";
+    const std::string test_pairs_file = sourcedir + "/aux/test_pairs_1024.txt";
     std::vector<std::vector<float>> test_pairs;
 
     load_test_pairs(test_pairs_file, test_pairs);
