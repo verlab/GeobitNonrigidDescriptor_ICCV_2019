@@ -22,7 +22,7 @@ void extract_descriptors(std::string cloud_path,
 
     // Set parameters
     ofm.setInputCloud(cloud);
-    if (dataset_type == "realdata-standard" || dataset_type == "realdata-smoothed")
+    if (dataset_type.find("real") != std::string::npos)
         ofm.setMaxEdgeLength(1.0);
     else
         ofm.setMaxEdgeLength(10.0);
@@ -33,6 +33,7 @@ void extract_descriptors(std::string cloud_path,
     // Reconstruct
     std::cout << "Creating mesh... " << std::flush;
     ofm.reconstruct(mesh);
+    mesh.header.seq = cloud->header.seq; //Pyramid Level
     std::cout << "done\n"
               << std::flush;
 
@@ -43,7 +44,7 @@ void extract_descriptors(std::string cloud_path,
         printf("Computing heatflow from scratch... it may take a while\n");
         dist_heat_flow.clear();
         compute_heat_flow_c(mesh, keypoints, dist_heat_flow);
-        dump_heatflow_to_file(cloud_path + ".heatflow", dist_heat_flow); //save heatflow to disk
+        //dump_heatflow_to_file(cloud_path + ".heatflow", dist_heat_flow); //save heatflow to disk - uncomment to allow precomputation
     }
     else
         printf("Loaded a precomputed heatflow from file!\n");
@@ -78,8 +79,9 @@ void extract_descriptors_rotated(
 
     // Set parameters
     ofm.setInputCloud(cloud);
-    if (dataset_type == "realdata-standard" || dataset_type == "realdata-smoothed")
+    if (dataset_type.find("real") != std::string::npos)
         ofm.setMaxEdgeLength(1.0); // 1.0
+        
     else
         ofm.setMaxEdgeLength(10.0);
 
@@ -99,7 +101,7 @@ void extract_descriptors_rotated(
         dist_heat_flow.clear();
         printf("Computing heatflow from scratch... it may take a while\n");
         compute_heat_flow_c(mesh, keypoints, dist_heat_flow);
-        dump_heatflow_to_file(cloud_path + ".heatflow", dist_heat_flow); //save heatflow to disk
+        //dump_heatflow_to_file(cloud_path + ".heatflow", dist_heat_flow); //uncomment this if you want to save precomputed heatflow to disk
     }
     else
         printf("Loaded a precomputed heatflow from file!\n");
@@ -122,8 +124,8 @@ void compute_features_rotated(const CloudType::Ptr cloud, std::string img_path, 
     std::vector<cv::Mat> mat_distances_vec;
     int halfPatchSize = patchSize / 2;
 
-    cv::Mat img;
-    extract_image_from_pointcloud(cloud, img, img_path, dataset_type);
+    cv::Mat img = cv::imread(img_path.c_str());
+    //extract_image_from_pointcloud(cloud, img, img_path, dataset_type);
 
     for (size_t kp = 0; kp < keypoints.size(); ++kp)
     {
@@ -289,7 +291,7 @@ void compute_heat_flow_c(const pcl::PolygonMesh &pcl_mesh,
     //std::cout << "pclMesh2libgeodesicMesh..." << std::endl << std::flush;
     std::vector<int> inverse_shift_connected_vertices;
     std::vector<int> shifts;
-    float f_scale = pcl_mesh.cloud.width / 640.0;
+    float f_scale = 1.0 / pow(2, pcl_mesh.header.seq); // pcl_mesh.cloud.width / 640.0;
 
     remove_keypoints_on_holes(pcl_mesh, coords_keypoints, f_scale);
 
@@ -359,7 +361,7 @@ void compute_heat_flow_c(const pcl::PolygonMesh &pcl_mesh,
         // interpolate distance map
 
         std::vector<double> hd_dists;
-        hd_dists = interpolate_heatflow(dists, f_scale, coords_keypoints[kp].pt);
+        hd_dists = interpolate_heatflow(dists, f_scale, pcl_mesh.cloud.width, coords_keypoints[kp].pt);
 
         dist_heat_flow.push_back(hd_dists);
     }
@@ -736,10 +738,10 @@ bool setSources(hmTriDistance *distance, size_t keypoint_index)
     return true;
 }
 
-std::vector<double> interpolate_heatflow(std::vector<double> &heatflow, float scale, cv::Point2f p)
+std::vector<double> interpolate_heatflow(std::vector<double> &heatflow, float scale, int width, cv::Point2f p)
 {
-    cv::Mat heatflow_img(480.0 * scale, 640.0 * scale, CV_64FC1);
-    int width = 640.0 * scale;
+    int height = heatflow.size() / width;
+    cv::Mat heatflow_img(height, width, CV_64FC1);
     cv::Point2f shift_error;
 
     p.x = (int)(p.x + 0.5);
@@ -766,10 +768,11 @@ std::vector<double> interpolate_heatflow(std::vector<double> &heatflow, float sc
     cv::Mat outimg;
     char buf[256];
 
+
     std::vector<double> new_heatflow;
 
     for (size_t i = 0; i < hscaled.rows * hscaled.cols; i++)
-        new_heatflow.push_back(hscaled.at<double>(i / 640, i % 640));
+        new_heatflow.push_back(hscaled.at<double>(i / hscaled.cols, i % hscaled.cols));
 
     return new_heatflow;
 }
@@ -806,8 +809,8 @@ void compute_vector_feature(const CloudType::Ptr cloud, std::string img_path, co
 {
 
     int halfPatchSize = patchSize / 2;
-    cv::Mat img;
-    extract_image_from_pointcloud(cloud, img, img_path, dataset_type);
+    cv::Mat img = cv::imread(img_path.c_str());;
+    //extract_image_from_pointcloud(cloud, img, img_path, dataset_type);
 
     //const std::string test_pairs_file = sourcedir + "/aux/test_pairs_reaching_holes.txt"; // "test_pairs.txt";
     //const std::string test_pairs_file = sourcedir + "/aux/test_pairs_512.txt";

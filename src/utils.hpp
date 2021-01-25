@@ -33,5 +33,5 @@ void filter_kps_boundingbox(std::vector<cv::KeyPoint>& kps, cv::Point2f pmin, cv
 bool sort_kps(cv::KeyPoint k1, cv::KeyPoint k2);
 void save_kps(std::vector<cv::KeyPoint> keypoints, std::string out_filename);
 bool load_heatflow_from_file(std::string filename, vec2d &heatflow);
-void dump_heatflow_to_file(std::string filename, vec2d heatflow);
+void dump_heatflow_to_file(std::string filename, vec2d &heatflow);
 

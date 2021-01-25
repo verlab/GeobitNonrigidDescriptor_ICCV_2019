@@ -62,7 +62,7 @@ void pclMesh2libgeodesicMesh(const pcl::PolygonMesh &pcl_mesh,
                              std::vector<int> &shifts);
 
 bool setSources(hmTriDistance *distance, size_t keypoint_index);
-std::vector<double> interpolate_heatflow(std::vector<double> &heatflow, float scale, cv::Point2f p);
+std::vector<double> interpolate_heatflow(std::vector<double> &heatflow, float scale, int width, cv::Point2f p);
 cv::Point2f rotate2d(const cv::Point2f &inPoint, const float &angRad);
 void apply_offset2d(cv::Mat &in, cv::Mat &out, int offsetx, int offsety);
 

@@ -149,11 +149,11 @@ bool load_heatflow_from_file(std::string filename, vec2d& heatflow)
         
 }
 
-void dump_heatflow_to_file(std::string filename, vec2d heatflow)
+void dump_heatflow_to_file(std::string filename, vec2d& heatflow)
 {
     FILE * pFile;
     pFile = fopen (filename.c_str(), "wb");
-    
+    printf("Saving heatflow in %s \n", filename.c_str());   
     long k, wh;
     double d;
     
@@ -167,10 +167,9 @@ void dump_heatflow_to_file(std::string filename, vec2d heatflow)
 
     for(size_t i=0; i < k; i++)
         for(size_t j=0; j < wh; j++)
-            fwrite(&heatflow[i][j], sizeof(double), 1, pFile);
+            fwrite(&(heatflow[0][0]), sizeof(double), 1, pFile);
             
     fclose(pFile);
-    
-        
+       
 }
 

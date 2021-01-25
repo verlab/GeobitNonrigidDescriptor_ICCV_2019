@@ -100,8 +100,6 @@ int main(int argc, char const *argv[])
     }
 
     float max_isocurve_size; // thickness of each isocurve
-    pcl::console::parse_argument(argc, argv, "-isocurvesize", max_isocurve_size);
-    std::cout << "isocurve size: " << max_isocurve_size << std::endl;
 
     float keypoint_scale = 7.0; //default OpenCV KeyPoint.size for the FAST detector
     pcl::console::parse_argument(argc, argv, "-kpscale", keypoint_scale);
@@ -136,6 +134,16 @@ int main(int argc, char const *argv[])
         print_help();
         return -1;
     }
+    else //Set default support region size according to dataset type
+    {
+        if(dataset_type.find("real") != std::string::npos) // Metric scale data (RGB-D sensors)
+            max_isocurve_size = 0.002;
+        else
+            max_isocurve_size = 0.06; //Simulated sequences
+    }
+
+    pcl::console::parse_argument(argc, argv, "-isocurvesize", max_isocurve_size);
+    std::cout << "isocurve size: " << max_isocurve_size << std::endl;
 
     if (!strcmp(USE_KEYPOINT_ORIENTATION, ""))
         PCL_WARN("[WARNING]: Keypoint orientation normalization disabled for all descriptors.\n");
@@ -150,7 +158,7 @@ int main(int argc, char const *argv[])
     std::stringstream filename_input;
     filename_input << inputdir << "/" << refcloud;
 
-    CloudType::Ptr ref_cloud(new CloudType);
+    CloudType::Ptr ref_cloud(new CloudType); ref_cloud->header.seq = pyramid_levels;
     cv::Mat ref_img;
     cv::Mat ref_img_scaled;
 
@@ -213,7 +221,7 @@ int main(int argc, char const *argv[])
         std::stringstream filename_cloud;
         filename_cloud << inputdir << "/" << clouds[c];
 
-        CloudType::Ptr cloud(new CloudType);
+        CloudType::Ptr cloud(new CloudType); cloud->header.seq = pyramid_levels;
         cv::Mat img2;
         cv::Mat img2_scaled;
 
