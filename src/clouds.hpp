@@ -12,7 +12,9 @@
 #include "opencv2/core.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/features2d.hpp"
-#include "opencv2/xfeatures2d.hpp"
+#ifndef NO_CONTRIB
+	#include "opencv2/xfeatures2d.hpp"
+#endif
 #include <opencv2/imgproc.hpp>
 #include <opencv2/photo.hpp>
 

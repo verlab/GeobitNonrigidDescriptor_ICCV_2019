@@ -482,6 +482,7 @@ float compute_canonical_orientation(const cv::Mat &image, cv::KeyPoint &keypoint
     //
     //keypoint.angle = cv::fastAtan2((float)m_01, (float)m_10);
     //return orientation;
+    #ifndef NO_CONTRIB
     else if (!strcmp(use_kp_orientation.c_str(), "SURF"))
     {
         //cv::Ptr<cv::Feature2D> surf = cv::SURF::create();//cv::Algorithm::create<cv::Feature2D>("Feature2D.SURF");
@@ -501,6 +502,7 @@ float compute_canonical_orientation(const cv::Mat &image, cv::KeyPoint &keypoint
 
         // std::cout << "**angle " << keypoint.angle << std::endl;
     }
+    #endif
 
     return orientation;
 }

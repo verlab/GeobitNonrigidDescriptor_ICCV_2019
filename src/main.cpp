@@ -63,9 +63,6 @@ bool cmdOptionExists(const char **begin, const char **end, const std::string &op
 
 int main(int argc, char const *argv[])
 {   
-    //std::vector<cv::Mat> test;
-    //save_hdf5_descs(test, "test.h5"); exit(0);
-
     if (cmdOptionExists(argv, argv + argc, "-h"))
     {
         print_help();
@@ -166,13 +163,16 @@ int main(int argc, char const *argv[])
     std::vector<cv::KeyPoint> ref_keypoints;
     CSVTable ref_groundtruth;
 
-// Load Detector
-#ifdef CV4 // use opencv4
-    cv::Ptr<cv::FeatureDetector> feature_detector = cv::SIFT::create();
+#ifdef NO_CONTRIB
+    // Load Detector
+    #ifdef CV4 // use opencv4
+        cv::Ptr<cv::FeatureDetector> feature_detector = cv::SIFT::create();
+    #else
+        cv::Ptr<cv::FeatureDetector> feature_detector = cv::xfeatures2d::SIFT::create();
+    #endif
 #else
-    cv::Ptr<cv::FeatureDetector> feature_detector = cv::xfeatures2d::SIFT::create();
+     cv::Ptr<cv::FeatureDetector> feature_detector = cv::BRISK::create();
 #endif
-
     //extract_image_from_pointcloud(ref_cloud, ref_img, filename_input.str() + "color.png");
     cv::resize(ref_img, ref_img_scaled, cv::Size(), keypoint_scale, keypoint_scale);
 
@@ -352,15 +352,7 @@ int main(int argc, char const *argv[])
 
             cv::Mat descriptors_ref, descriptors_img2;
 
-            if (descriptor_alg[d] == "FREAK")
-            {
-                descriptor_extractor = cv::xfeatures2d::FREAK::create();
-            }
-            else if (descriptor_alg[d] == "BRIEF")
-            {
-                descriptor_extractor = cv::xfeatures2d::BriefDescriptorExtractor::create();
-            }
-            else if (descriptor_alg[d] == "BRISK")
+            if (descriptor_alg[d] == "BRISK")
             {
                 descriptor_extractor = cv::BRISK::create();
             }
@@ -368,10 +360,21 @@ int main(int argc, char const *argv[])
             {
                 descriptor_extractor = cv::ORB::create();
             }
-            else if (descriptor_alg[d] == "DAISY")
-            {
-                descriptor_extractor = cv::xfeatures2d::DAISY::create(15.0, 3, 8, 8, cv::xfeatures2d::DAISY::NRM_NONE, cv::noArray(), true, true);
-            }else{
+            #ifndef NO_CONTRIB
+                else if (descriptor_alg[d] == "FREAK")
+                {
+                    descriptor_extractor = cv::xfeatures2d::FREAK::create();
+                }
+                else if (descriptor_alg[d] == "BRIEF")
+                {
+                    descriptor_extractor = cv::xfeatures2d::BriefDescriptorExtractor::create();
+                }
+                else if (descriptor_alg[d] == "DAISY")
+                {
+                    descriptor_extractor = cv::xfeatures2d::DAISY::create(15.0, 3, 8, 8, cv::xfeatures2d::DAISY::NRM_NONE, cv::noArray(), true, true);
+                }
+            #endif
+            else{
                 std::cout << "Invalid descriptor: " << descriptor_alg[d] << std::endl;
                 continue;
             }   

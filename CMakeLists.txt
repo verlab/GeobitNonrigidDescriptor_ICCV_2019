@@ -21,6 +21,7 @@ if("${OpenCV_VERSION_MAJOR}" STREQUAL "4")
 endif()
 
 
+
 include_directories(${PCL_INCLUDE_DIRS})
 include_directories(${PROJECT_SOURCE_DIR}/src/libgeodesic/include)
 
@@ -61,3 +62,10 @@ amd
 m 
 suitesparseconfig
 )
+
+OPTION(NO_CONTRIB "Disable OpenCV contrib module" OFF)
+
+if(NO_CONTRIB)
+	add_compile_definitions(NO_CONTRIB)
+	message("Disabling OpenCV Contrib modules.")
+endif()
