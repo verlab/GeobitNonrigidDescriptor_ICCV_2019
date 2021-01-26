@@ -14,6 +14,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 find_package(PCL 1.8 REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(HDF5 REQUIRED COMPONENTS C CXX)
+find_package(MPI) 
 
 if("${OpenCV_VERSION_MAJOR}" STREQUAL "4")
   message("Using opencv 4")
@@ -24,6 +25,7 @@ endif()
 
 include_directories(${PCL_INCLUDE_DIRS})
 include_directories(${PROJECT_SOURCE_DIR}/src/libgeodesic/include)
+include_directories(${MPI_INCLUDE_PATH})
 
 # libgeodesic
 include_directories("/usr/local/include/")
@@ -46,12 +48,12 @@ file(GLOB GEODESIC_SRC_FILES "${PROJECT_SOURCE_DIR}/src/libgeodesic/src/*.cpp")
 file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/src/*.cpp")
 
 add_executable (nonrigid_descriptor ${SOURCES} ${GEODESIC_SRC_FILES})
-target_link_libraries (nonrigid_descriptor 
+target_link_libraries (nonrigid_descriptor
 ${PCL_LIBRARIES}
 ${OpenCV_LIBS}
-#${Matlab_LIBRARIES}
 ${HDF5_CXX_LIBRARIES}
 ${HDF5_LIBRARIES}
+${MPI_CXX_LIBRARIES}
 spqr 
 umfpack 
 cholmod 
