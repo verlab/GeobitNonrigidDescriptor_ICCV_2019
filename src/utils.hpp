@@ -18,6 +18,9 @@
 #define CV4
 #ifdef CV4
 
+//HDF5
+#include "H5Cpp.h"
+
 #define CV_BGR2GRAY cv::COLOR_BGR2GRAY
 #define CV_INTER_LINEAR cv::INTER_LINEAR
 #define CV_AA cv::LINE_AA
@@ -34,4 +37,5 @@ bool sort_kps(cv::KeyPoint k1, cv::KeyPoint k2);
 void save_kps(std::vector<cv::KeyPoint> keypoints, std::string out_filename);
 bool load_heatflow_from_file(std::string filename, vec2d &heatflow);
 void dump_heatflow_to_file(std::string filename, vec2d &heatflow);
+int save_hdf5_descs(std::vector<cv::Mat>& descriptors, std::vector<cv::KeyPoint> kps, std::string filename);
 

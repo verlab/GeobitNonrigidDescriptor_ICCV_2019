@@ -1,5 +1,6 @@
 #include "utils.hpp"
 
+using namespace H5;
 
 bool load_groundtruth_keypoints_csv(const std::string &filename, std::vector<cv::KeyPoint> &keypoints, CSVTable &csv_data)
 {
@@ -173,3 +174,78 @@ void dump_heatflow_to_file(std::string filename, vec2d& heatflow)
        
 }
 
+template <class T>
+class mat3{
+    uint32_t NX, NY, NZ;
+    public:
+        T* data;   
+        mat3(int NX, int NY, int NZ): NX(NX), NY(NY), NZ(NZ){data = new T[NX*NY*NZ];}
+        ~mat3(){delete data;}
+        T& operator()(int i, int j, int k){return data[k + NZ * j + NZ * NY * i]; }
+};
+
+int save_hdf5_descs(std::vector<cv::Mat>& descriptors, std::vector<cv::KeyPoint> kps, std::string filename)
+{
+
+    const H5std_string  FILE_NAME( filename.c_str() );
+    const H5std_string  DATASET_DESCRIPTORS( "descriptors" );
+    const H5std_string  DATASET_ID( "id" );
+    const int   NX = descriptors[0].rows;                    // dataset dimensions
+    const int   NY = descriptors[0].cols;
+    const int   NZ = descriptors.size(); // orientation bins
+    const int   RANK = 3; //results are stored as a 3D tensor
+
+   /*
+    * Data initialization.
+    */
+    mat3<uint8_t> mat(NX,NY,NZ);
+    uint32_t idxs[kps.size()];
+
+    for(int i=0; i < kps.size(); i++)
+        idxs[i] = kps[i].class_id;
+
+   for(int i = 0; i < NX; i++)
+        for (int j = 0; j < NY; j++)
+            for(int k=0; k < NZ; k++)
+                mat(i,j,k) = descriptors[k].at<uint8_t>(i,j);
+
+      H5File file( FILE_NAME, H5F_ACC_TRUNC );
+      /*
+       * Define the size of the arrays and create the data space for fixed
+       * size dataset.
+       */
+      // descriptor dataset dimensions
+      hsize_t     dimsf[3];              
+      dimsf[0] = NX;
+      dimsf[1] = NY;
+      dimsf[2] = NZ;
+      DataSpace dataspace( RANK, dimsf );
+
+    // indices dataset dimensions
+      hsize_t dims_id[1];
+      dims_id[0] = kps.size();
+      DataSpace dataspace_id( 1, dims_id );
+      /*
+       * Define datatype for the data in the file.
+       */
+      IntType datatype( PredType::NATIVE_UINT8 );
+      datatype.setOrder( H5T_ORDER_LE );
+
+      IntType datatype_id( PredType::NATIVE_UINT32 );
+      datatype_id.setOrder( H5T_ORDER_LE );      
+      /*
+       * Create a new dataset within the file using defined dataspace and
+       * datatype and default dataset creation properties.
+       */
+      DataSet dataset_desc = file.createDataSet( DATASET_DESCRIPTORS, datatype, dataspace );
+      DataSet dataset_id = file.createDataSet( DATASET_ID, datatype_id, dataspace_id );
+      /*
+       * Write the data to the dataset using default memory space, file
+       * space, and transfer properties.
+       */
+      dataset_desc.write( mat.data, PredType::NATIVE_UINT8 );
+      dataset_id.write(idxs, PredType::NATIVE_UINT32 );
+
+   return 0;  // successfully terminated
+
+}

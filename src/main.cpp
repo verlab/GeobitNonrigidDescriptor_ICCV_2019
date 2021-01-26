@@ -62,7 +62,10 @@ bool cmdOptionExists(const char **begin, const char **end, const std::string &op
 }
 
 int main(int argc, char const *argv[])
-{
+{   
+    //std::vector<cv::Mat> test;
+    //save_hdf5_descs(test, "test.h5"); exit(0);
+
     if (cmdOptionExists(argv, argv + argc, "-h"))
     {
         print_help();
@@ -86,12 +89,7 @@ int main(int argc, char const *argv[])
     }
 
     std::vector<std::string> clouds;
-    if (pcl::console::parse_multiple_arguments(argc, argv, "-clouds", clouds) == -1)
-    {
-        PCL_ERROR("Need at leat one other cloud for comparision! Please use -clouds \"cloud1.pcd\" ... \"cloudn.pcd\" to continue.\n");
-        print_help();
-        return (-1);
-    }
+    pcl::console::parse_multiple_arguments(argc, argv, "-clouds", clouds);
 
     std::string sourcedir;
     if (pcl::console::parse_argument(argc, argv, "-sourcedir", sourcedir) == -1)
@@ -206,6 +204,8 @@ int main(int argc, char const *argv[])
     std::vector<cv::Mat> ref_descriptors;
     extract_descriptors_rotated(filename_input.str(), ref_cloud, ref_keypoints, ref_descriptors, sourcedir, dataset_type, recalc_heatflow,
                                 patchSize, nb_angle_bins, use_kp_orientation, max_isocurve_size);
+    //Save Descriptors
+    save_hdf5_descs(ref_descriptors, ref_keypoints, filename_input.str() + ".h5");
 
 #else
     cv::Mat ref_descriptors;
@@ -213,6 +213,8 @@ int main(int argc, char const *argv[])
                         patchSize, use_kp_orientation, max_isocurve_size);
 
 #endif
+
+
 
     for (size_t c = 0; c < clouds.size(); ++c)
     {
@@ -259,6 +261,7 @@ int main(int argc, char const *argv[])
         std::vector<cv::Mat> descriptors;
         extract_descriptors_rotated(filename_cloud.str(), cloud, keypoints, descriptors, sourcedir, dataset_type, recalc_heatflow,
                                     patchSize, nb_angle_bins, use_kp_orientation, max_isocurve_size);
+        save_hdf5_descs(descriptors, keypoints, filename_cloud.str() + ".h5");
 
         std::cout << "Matches: RefCloud vs " << clouds[c] << " with sizes " << ref_descriptors[0].rows << " " << descriptors[0].rows << std::endl
                   << std::flush;

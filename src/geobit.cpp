@@ -542,12 +542,12 @@ void estimatePointAtIsoCurve(const cv::Mat &heat_flow, const cv::KeyPoint &kp, f
         {
             //printf("breaking the loop large norm: norm: %f\n", cv::norm(p-k));
             //getchar();
-            break;
+            //break;
         }
 
-        if (point.x < 0 || img_x >= 640 || point.y < 0 || img_y >= 480)
+        if (point.x < 0 || img_x >= heat_flow.cols || point.y < 0 || img_y >= heat_flow.rows)
         {
-            PCL_ERROR("breaking the loop beyond the limits\n");
+            //PCL_ERROR("breaking the loop beyond the limits\n");
             //getchar();
             break;
         }
@@ -575,7 +575,7 @@ void estimatePointAtIsoCurve(const cv::Mat &heat_flow, const cv::KeyPoint &kp, f
         point.x = middle_point.x;
         point.y = middle_point.y;
 
-        if (point.x < 0 || point.x >= 640 || point.y < 0 || point.y >= 480)
+        if (point.x < 0 || point.x >= heat_flow.cols || point.y < 0 || point.y >= heat_flow.rows)
         {
             PCL_ERROR("breaking the loop beyond the limits\n");
             //getchar();
@@ -1046,13 +1046,13 @@ void filter_matches(const std::vector<cv::DMatch> &matches,
                     int threshold, std::vector<cv::DMatch> &filtered_matches)
 {
 
-    std::cout<<"Matches before filtering: " << matches.size() << std::endl;
+    //std::cout<<"Matches before filtering: " << matches.size() << std::endl;
     for (size_t m = 0; m < matches.size(); ++m)
     {
         if (matches[m].distance < threshold)
             filtered_matches.push_back(matches[m]);
     }
-    std::cout<<"Matches after filtering: " << filtered_matches.size() << std::endl;
+    //std::cout<<"Matches after filtering: " << filtered_matches.size() << std::endl;
 
 
 }
