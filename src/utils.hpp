@@ -14,12 +14,12 @@
 //PCL
 #include <pcl/console/print.h>
 
-// Opencv 4 compatibility
-#define CV4
-#ifdef CV4
-
 //HDF5
 #include "H5Cpp.h"
+
+// Opencv 4 compatibility
+//#define CV4
+#ifdef CV4
 
 #define CV_BGR2GRAY cv::COLOR_BGR2GRAY
 #define CV_INTER_LINEAR cv::INTER_LINEAR

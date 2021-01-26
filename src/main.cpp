@@ -56,12 +56,12 @@ void print_help()
     std::cout << "" << std::endl;
 }
 
-bool cmdOptionExists(const char **begin, const char **end, const std::string &option)
+bool cmdOptionExists(char **begin, char **end, std::string option)
 {
     return std::find(begin, end, option) != end;
 }
 
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {   
     if (cmdOptionExists(argv, argv + argc, "-h"))
     {
@@ -163,7 +163,7 @@ int main(int argc, char const *argv[])
     std::vector<cv::KeyPoint> ref_keypoints;
     CSVTable ref_groundtruth;
 
-#ifdef NO_CONTRIB
+#ifndef NO_CONTRIB
     // Load Detector
     #ifdef CV4 // use opencv4
         cv::Ptr<cv::FeatureDetector> feature_detector = cv::SIFT::create();

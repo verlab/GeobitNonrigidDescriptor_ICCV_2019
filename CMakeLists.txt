@@ -66,6 +66,6 @@ suitesparseconfig
 OPTION(NO_CONTRIB "Disable OpenCV contrib module" OFF)
 
 if(NO_CONTRIB)
-	add_compile_definitions(NO_CONTRIB)
+	add_definitions(-DNO_CONTRIB)
 	message("Disabling OpenCV Contrib modules.")
 endif()
